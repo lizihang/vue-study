@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>v-model-select</title>
+</head>
+<body>
+<div id="app">
+  <h1>{{message}}</h1>
+  <select name="select" id="ss" v-model="selected">
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+  </select>
+  <p>selected--{{selected}}</p>
+
+  <select name="select2" id="ss2" v-model="mselected" multiple>
+    <option>a</option>
+    <option>b</option>
+    <option>c</option>
+    <option>d</option>
+  </select>
+  <p>mselected--{{mselected}}</p>
+
+  <select name="movies" id="movies" v-model="selectmovie" @change="changed(selectmovie)">
+    <option v-for="(movie,index) in movies" :value="movie" :key="index">{{movie}}</option>
+  </select>
+  <p>select movie is {{selectmovie}}</p>
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue.js!',
+      selected: '',
+      mselected: [],
+      movies: ['火影', '死神', '海贼王'],
+      selectmovie: ''
+    },
+    methods: {
+      changed(selectmovie) {
+        alert("changed:" + selectmovie)
+      }
+    }
+  });
+</script>
+</body>
+</html>

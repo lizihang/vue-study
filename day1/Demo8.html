@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <h1>{{message}}</h1>
+
+  <div v-if="this.books.length>0">
+    <table>
+      <th></th>
+      <th>书籍名称</th>
+      <th>出版日期</th>
+      <th>价格</th>
+      <th>数量</th>
+      <th>操作</th>
+      <tr v-for="(book,index) in books">
+        <td>{{index+1}}</td>
+        <td>{{book.name}}</td>
+        <td>{{book.date}}</td>
+        <td>{{book.price}}</td>
+        <td>
+          <button @click="sub(index)">-</button>
+          {{book.num}}
+          <button @click="add(index)">+</button>
+        </td>
+        <td>
+          <button @click="remove(index)">移除</button>
+        </td>
+      </tr>
+    </table>
+    <h1>总价：￥{{totalPrice}}</h1>
+  </div>
+  <div v-else>
+    <h1>购物车为空！</h1>
+  </div>
+
+</div>
+
+<script src="../js/vue.js"></script>
+<script>
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue.js!',
+      books: [{
+        name: "《书籍1》",
+        date: "2020-1",
+        price: 23.00,
+        num: 1
+      }, {
+        name: "《书籍2》",
+        date: "2020-2",
+        price: 33.00,
+        num: 1
+      }, {
+        name: "《书籍3》",
+        date: "2020-3",
+        price: 43.00,
+        num: 1
+      }, {
+        name: "《书籍4》",
+        date: "2020-4",
+        price: 53.00,
+        num: 1
+      }]
+    },
+    methods: {
+      add(index) {
+        this.books[index].num++
+      },
+      sub(index) {
+        if (this.books[index].num <= 1) {
+          return
+        }
+        this.books[index].num--
+      },
+      remove(index) {
+        this.books.splice(index, 1)
+      }
+    },
+    computed: {
+      totalPrice() {
+        return this.books.reduce((total, book) => total + book.num * book.price, 0)
+      }
+    }
+  });
+</script>
+</body>
+</html>

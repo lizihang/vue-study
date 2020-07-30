@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+  <h1>{{message}}</h1>
+  <childcpn :cpnmovies="movies"></childcpn>
+  <childcpn></childcpn>
+</div>
+
+<template id="childcpn">
+  <div>
+    <h2>{{message}}</h2>
+    <h2>title-{{title}}</h2>
+    <ul>
+      <li v-for="(movie,index) in cpnmovies">{{index+1}}--{{movie}}</li>
+    </ul>
+  </div>
+</template>
+
+<script src="../js/vue.js"></script>
+<script>
+
+  const childcpn = {
+    template: '#childcpn',
+    props: {
+      cpnmovies: {
+        type: Array,
+        default() {
+          return ['aaa']
+        }
+      },
+      title: {
+        type: String,
+        default: 'aaa',
+        required: true
+      }
+    },
+    data() {
+      return {
+        message: '子组件message'
+      }
+    }
+  }
+
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue.js!',
+      movies: ['火影', '死神', '海贼王']
+    },
+    components: {
+      childcpn
+    }
+  });
+</script>
+
+</body>
+</html>

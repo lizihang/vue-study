@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+  <h1>{{message}}</h1>
+  <global></global>
+  <jubu></jubu>
+</div>
+
+<template id="aaa">
+  <div>
+    <h1>全局组件</h1>
+    <p>全局组件内容</p>
+  </div>
+</template>
+
+<template id="jubu">
+  <div>
+    <h1>局部组件</h1>
+    <p>局部组件内容</p>
+  </div>
+</template>
+
+<script src="../js/vue.js"></script>
+<script>
+
+  <!-- 全局组件 -->
+  Vue.component("global", {
+    template: '#aaa'
+  })
+
+  const jubu = {
+    template: '#jubu'
+  }
+
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue.js!'
+    },
+    components: {
+      jubu
+    }
+  });
+</script>
+
+</body>
+</html>
