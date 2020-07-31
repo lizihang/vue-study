@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>组件综合案例</title>
+</head>
+<body>
+
+<div id="app">
+  <h1>{{message}}</h1>
+  <cpn :n1="num1" :n2="num2" @changen1="change1" @changen2="change2"></cpn>
+</div>
+
+<template id="cpn">
+  <div>
+    <p>{{n1}}</p>
+    <p>{{number1}}</p>
+    <input type="text" v-model="number1" @input="changen1">
+    <p>{{n2}}</p>
+    <p>{{number2}}</p>
+    <input type="text" v-model="number2" @input="changen2">
+  </div>
+</template>
+
+<script src="../js/vue.js"></script>
+<script>
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue.js!',
+      num1: 1,
+      num2: 2
+    },
+    methods: {
+      change1(value) {
+        console.log("aaa---" + value);
+        this.num1 = parseFloat(value)
+      },
+      change2(value) {
+        console.log("bbb---" + value);
+        this.num2 = parseFloat(value)
+      }
+    },
+    components: {
+      cpn: {
+        template: '#cpn',
+        data() {
+          return {
+            number1: this.n1,
+            number2: this.n2
+          }
+        },
+        props: {
+          n1: Number,
+          n2: Number
+        },
+        methods: {
+          changen1(event) {
+            console.log(event.target.value);
+            this.$emit("changen1", event.target.value)
+            this.number2 = event.target.value * 100
+            this.$emit("changen2", this.number2)
+          },
+          changen2(event) {
+            console.log(event.target.value);
+            this.$emit("changen2", event.target.value)
+            this.number1 = event.target.value / 100
+            this.$emit("changen1", this.number1)
+          }
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

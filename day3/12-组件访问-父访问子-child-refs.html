@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>12-组件访问-父访问子-child-refs</title>
+</head>
+<body>
+
+<div id="app">
+  <h1>{{message}}</h1>
+  <father ref="myfather"></father>
+</div>
+
+<template id="child">
+  <div>
+    <h2>child component</h2>
+  </div>
+</template>
+
+<template id="father">
+  <div>
+    <h2>father component</h2>
+    <child></child>
+    <child></child>
+    <child ref="mychild"></child>
+    <child ref="mychild2"></child>
+    <button @click="btnClick">click</button>
+  </div>
+</template>
+
+<script src="../js/vue.js"></script>
+<script>
+
+  const child = {
+    template: '#child',
+    data() {
+      return {
+        cmessage: "this is child message"
+      }
+    },
+    methods: {
+      showChild() {
+        console.log("this is child method")
+      }
+    }
+  }
+
+  const father = {
+    template: '#father',
+    data() {
+      return {
+        fmessage: "this is father message"
+      }
+    },
+    methods: {
+      btnClick() {
+        console.log("this is father method")
+        console.log(this.$children[0].cmessage)
+        console.log(this.$refs.mychild);
+      }
+    },
+    components: {
+      child
+    }
+  }
+
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue.js!'
+    },
+    components: {
+      father
+    }
+  });
+</script>
+
+</body>
+</html>

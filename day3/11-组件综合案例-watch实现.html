@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>组件综合案例-watch实现</title>
+</head>
+<body>
+
+<div id="app">
+  <h1>{{message}}</h1>
+  <cpn :n1="num1" :n2="num2" @changen1="change1" @changen2="change2"></cpn>
+</div>
+
+<template id="cpn">
+  <div>
+    <p>{{n1}}</p>
+    <p>{{number1}}</p>
+    <input type="text" v-model="number1">
+    <p>{{n2}}</p>
+    <p>{{number2}}</p>
+    <input type="text" v-model="number2">
+  </div>
+</template>
+
+<script src="../js/vue.js"></script>
+<script>
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue.js!',
+      num1: 1,
+      num2: 2
+    },
+    methods: {
+      change1(value) {
+        console.log("aaa---" + value);
+        this.num1 = parseFloat(value)
+      },
+      change2(value) {
+        console.log("bbb---" + value);
+        this.num2 = parseFloat(value)
+      }
+    },
+    components: {
+      cpn: {
+        template: '#cpn',
+        data() {
+          return {
+            number1: this.n1,
+            number2: this.n2
+          }
+        },
+        props: {
+          n1: Number,
+          n2: Number
+        },
+        watch: {
+          number1(newValue, oldValue) {
+            console.log("newValue:" + newValue + "---oldValue:" + oldValue);
+            this.$emit("changen1", newValue)
+            this.number2 = newValue * 100
+            this.$emit("changen2", this.number2)
+          },
+          number2(newValue, oldValue) {
+            console.log("newValue:" + newValue + "---oldValue:" + oldValue);
+            this.$emit("changen2", newValue)
+            this.number1 = newValue / 100
+            this.$emit("changen1", this.number1)
+          }
+        }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

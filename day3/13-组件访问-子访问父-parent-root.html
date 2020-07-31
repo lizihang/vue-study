@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>13-组件访问-子访问父-parent-root</title>
+</head>
+<body>
+
+<div id="app">
+  <h1>{{message}}</h1>
+  <father></father>
+</div>
+
+<template id="child">
+  <div>
+    <h2>child component</h2>
+    <button @click="btnClick">click</button>
+  </div>
+</template>
+
+<template id="father">
+  <div>
+    <h2>father component</h2>
+    <child></child>
+    <child></child>
+    <child></child>
+    <child></child>
+  </div>
+</template>
+
+<script src="../js/vue.js"></script>
+<script>
+
+  const child = {
+    template: '#child',
+    data() {
+      return {
+        cmessage: "this is child message"
+      }
+    },
+    methods: {
+      btnClick() {
+        console.log("this is child method")
+        this.$parent.showFather()
+        console.log(this.$root.message);
+      }
+    }
+  }
+
+  const father = {
+    template: '#father',
+    data() {
+      return {
+        fmessage: "this is father message"
+      }
+    },
+    methods: {
+      showFather() {
+        console.log("this is father method")
+      }
+    },
+    components: {
+      child
+    }
+  }
+
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue.js!'
+    },
+    components: {
+      father
+    }
+  });
+</script>
+
+</body>
+</html>
