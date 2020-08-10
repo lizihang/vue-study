@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<script>
+  Promise.all([
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('aaa');
+        resolve('aaa')
+      }, 1000)
+    }),
+    new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log('bbb');
+        resolve('bbb')
+      }, 2000)
+    })
+  ]).then(results => {
+    console.log(results.length);
+  })
+</script>
+</body>
+</html>
